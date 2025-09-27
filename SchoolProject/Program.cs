@@ -38,10 +38,24 @@ namespace SchoolProject
 
             app.UseAuthorization();
 
+
+            app.MapControllerRoute(
+                name: "createHome",
+                pattern: "/Create",
+                defaults: new { controller = "Home", action = "Create" }
+            );           
+            
+            app.MapControllerRoute(
+                name: "DetailsHome",
+                pattern: "/Details/{id?}",
+                defaults: new { controller = "Home", action = "Details" }
+            );
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
+            
             app.Run();
         }
     }

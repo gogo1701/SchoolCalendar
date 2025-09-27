@@ -20,3 +20,20 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.navbar {
+    font-family: 'Sofia Sans', sans-serif;
+}
+
+.navbar-collapse {
+    justify-content: center !important;
+}
+
+.navbar .nav-link {
+    color: black !important;
+    transition: color 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+   color: #0068FF !important;
+}

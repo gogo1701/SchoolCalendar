@@ -72,15 +72,24 @@ public class NewsService
 
     public async Task<IEnumerable<CalendarItem>> GetAllCalendarItemsAsync()
     {
+        const string cacheKey = "CalendarItemsCache";
+
+        if (_cache.TryGetValue(cacheKey, out IEnumerable<CalendarItem> cachedItems))
+            return cachedItems;
+
         var newsWithCalendar = (await _newsRepository.GetAllAsync())
             .Where(x => x.DateOnCalendar.HasValue);
 
-        return newsWithCalendar.Select(x => new CalendarItem
+        var calendarItems = newsWithCalendar.Select(x => new CalendarItem
         {
             Id = x.Id,
             Title = x.Title,
-            Description = x.Content,
             CalendarDate = x.DateOnCalendar!.Value
-        });
+        }).ToList();
+
+        _cache.Set(cacheKey, calendarItems, TimeSpan.FromSeconds(30));
+
+        return calendarItems;
     }
+
 }
